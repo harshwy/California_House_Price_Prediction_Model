@@ -8,9 +8,9 @@ import pickle
 
 col = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']
 
-st.title('I am the Boss!')
+st.title('California Housing Price Prediction')
 
-st.image('https://nycdsa-blog-files.s3.us-east-2.amazonaws.com/2021/03/chaitali-majumder/house-price-497112-KhCJQICS.jpg')
+st.image('https://thumbs.dreamstime.com/b/cozy-house-beautiful-landscaping-sunny-day-home-exterior-75443602.jpg')
 
 
 
@@ -22,13 +22,13 @@ st.subheader('''User Must Enter Given values to predict Price:
 
 st.sidebar.title('Select House Features 🏠')
 
-st.sidebar.image('https://png.pngtree.com/thumb_back/fh260/background/20230804/pngtree-an-upside-graph-showing-prices-and-houses-in-the-market-image_13000262.jpg')
+st.sidebar.image('https://thumbs.dreamstime.com/b/cozy-house-beautiful-landscaping-sunny-day-home-exterior-75443602.jpg')
 
 
 # read_data
-temp_df = pd.read_csv('california.csv')
+temp_df = pd.read_csv('California.csv')
 
-random.seed(32)
+random.seed(12)
 
 all_values = []
 
@@ -40,35 +40,46 @@ for i in temp_df[col]:
 
     all_values.append(var)
 
+
 ss = StandardScaler()
 ss.fit(temp_df[col])
 
+
 final_value = ss.transform([all_values])
+
 
 with open('house_price_pred_ridge_model.pkl','rb') as f:
     chatgpt = pickle.load(f)
+
 
 price = chatgpt.predict(final_value)[0]
 
 import time
 
 
+st.write(pd.DataFrame(dict(zip(col,all_values)),index = [1]))
+
+value = 0
 progress_bar = st.progress(0)
 placeholder = st.empty()
-placeholder.subheader('Predicting Price')
+placeholder.subheader('Predicting Price!!')
+place = st.empty()
+place.image('https://cdn.edu.buncee.com/rackspace/bnc-assets/animations/6b6/1454533474-Young_animation_education020316_01.gif')
 
 if price>0:
 
+
     for i in range(100):
         time.sleep(0.05)
-        progress_bar.progress(i + 1)
-
-    body = f'Predicted Median House Price: ${round(price,2)} Thousand Dollars'
+        progress_bar.progress(i+1)
+        
+    body = f'Predicted Median House Price: ${round(price, 2)} Thousand Dollars'
     placeholder.empty()
+    place.empty()
     # st.subheader(body)
 
     st.success(body)
+
 else:
-    body = 'Invalid House features Values'
+    body = 'Invalid House Features'
     st.warning(body)
-    
