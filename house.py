@@ -26,7 +26,7 @@ st.sidebar.image('https://png.pngtree.com/thumb_back/fh260/background/20230804/p
 
 
 # read_data
-temp_df = pd.read_csv('california.csv')
+temp_df = pd.read_csv('California.csv')
 
 random.seed(32)
 
